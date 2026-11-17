@@ -1,5 +1,25 @@
-# 应急与安全 知识库 · 第8册_逻辑统计数学工具箱技术编程实战
+# 应急与安全 · 第8册_逻辑统计数学工具箱技术编程实战
 
+8.1 AI 蒸馏：给 AI 编程立规矩（6 万星项目）
+第 9 章  Python 常用库（pandas / numpy / matplotlib）
+Steve Brunton（华盛顿大学教授）610 分钟数学基础课专为工程师讲机器学习核心数学：SVD、特征值、线性代数。不用严格证明，讲直觉、讲应用、讲代码。
+第 10 章  2026 AI 时代自学编程的路径
+10.1 RAG 从 0 到实战
+10.2 自学三原则
+附录 A  来源对照表
+附录 B  去重说明
+✅ 两本手册**完全零重叠**，直接合并为一本「硬技能工具箱」。
+📌  标准经济学假设人理性，但真实的人被参照点、损失厌恶、当下享乐左右。
+📌  统计学八步法骨架（记住这条链）：描述数据 → 建立概率模型 → 抽样分布 → 区间估计 → 假设检验
+📌  AI 数学四块内容与顺序：线性代数（漂浮）→ 微积分（划水）→ 概率（换气）→ 统计（看方向）
+AI 数学支柱
+对应概念
+这门课讲什么
+在 AI 里用来干嘛
+线性代数
+向量 / 矩阵 / SVD / 特征值
+矩阵就是数据表、特征分解就是拆数据、SVD 就是数学滤镜
+LLM 注意力机制、CNN 卷积、推荐系统矩阵分解
 微积分
 导数 / 梯度 / 链式法则
 导数就是变化率、梯度下降就是下山找最低点
@@ -193,29 +213,3 @@ class Value:
         self.data = data
         self.grad = 0.0
         self._backward = lambda: None
-        self._prev = set(_prev)
-        self._op = _op
-    def __add__(self, other):
-        other = other if isinstance(other, Value) else Value(other)
-        out = Value(self.data + other.data, (self, other), '+')
-        def _backward():
-            self.grad += out.grad
-            other.grad += out.grad
-        out._backward = _backward
-        return out
-    def __mul__(self, other):
-        other = other if isinstance(other, Value) else Value(other)
-        out = Value(self.data * other.data, (self, other), '*')
-        def _backward():
-            self.grad += other.data * out.grad
-            other.grad += self.data * out.grad
-        out._backward = _backward
-        return out
-    def __pow__(self, other):
-        assert isinstance(other, (int, float))
-        out = Value(self.data ** other, (self,), f'**{other}')
-        def _backward():
-            self.grad += other * (self.data ** (other - 1)) * out.grad
-        out._backward = _backward
-        return out
-    def relu(self):

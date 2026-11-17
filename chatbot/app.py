@@ -9,20 +9,20 @@ from rag import SafelandChatbot, MODES
 
 # ====== 页面配置 ======
 st.set_page_config(
-    page_title="Safeland Guide · 海外生存指南",
-    page_icon="🌍",
+    page_title="Safeland Guide · 独立生活指南",
+    page_icon="🏠",
     layout="wide",
 )
 
 # 模式显示标签
 MODE_LABELS = {
-    k: f"🌍 {label}" for k, (label, _, _) in MODES.items()
+    k: f"🏠 {label}" for k, (label, _, _) in MODES.items()
 }
 
 # ====== 侧边栏 ======
 with st.sidebar:
-    st.title("🌍 Safeland Guide")
-    st.caption("海外生存指南智能客服 · 15 入口隔离")
+    st.title("🏠 Safeland Guide")
+    st.caption("独立生活指南智能客服 · 15 入口隔离")
 
     st.subheader("选择入口")
     mode = st.radio(
@@ -76,9 +76,9 @@ if cb.top_k != top_k or cb.web_fallback != web_on:
 
 # ====== 主区域 ======
 label = MODES[mode][0]
-st.title(f"🌍 Safeland Guide · {label}")
+st.title(f"🏠 Safeland Guide · {label}")
 st.info(
-    f"👋 你好！我是「{label}」海外生存专家。"
+    f"👋 你好！我是「{label}」独立生活专家。"
     f"当前只加载「{label}」知识库（{len(cb.chunks)} 个知识块），"
     f"没命中的问题会自动上网搜权威结果。"
 )

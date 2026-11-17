@@ -10,7 +10,7 @@ REM ====== Launch ======
 cd /d "%~dp0"
 echo.
 echo ============================================
-echo   Safeland Guide - Overseas Survival Assistant
+echo   Safeland Guide - Independent Living Assistant
 echo   Browser opens http://localhost:8503
 echo   Close this window to stop
 echo ============================================

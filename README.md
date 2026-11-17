@@ -1,38 +1,42 @@
-# 🌍 Safeland Guide · 海外生存指南
+# 🏠 Safeland Guide · 独立生活指南
 
-**为什么做这个项目？** 第一次去海外生活的人会遇到 101 个问题——租房怎么避押金坑？GP 和 ER 怎么区分？驾照怎么转？机场打车会不会被溢价？市面上要么是零散的游记，要么是只覆盖一个国家的单点攻略——**没有一个助手能把"海外生存"拆成 15 个独立主题，让你精准查、快速找**。
+**为什么做这个项目？** 毕业到陌生城市独立生活的年轻人会遇到 101 个没人教的问题——租房怎么避押金坑？社医保怎么转？新手爸妈怎么带娃？第一次养猫要准备什么？报税退税怎么填？市面上要么是零散的小红书笔记，要么是只覆盖一个城市的单点攻略——**没有一个助手能把"独立生活"拆成 17 个独立主题，让你精准查、快速找**。
 
-本项目把海外生存知识按**15 个场景入口彻底隔离**打包：侧栏选「居住常识」就只加载租房/水电网/室友相关的 17 个知识块，选「医疗与健康」就只加载看病/医保/急救的 10 个知识块，互不污染。知识库没命中的问题自动调用 DuckDuckGo 上网搜索权威结果兜底。
+本项目把独立生活知识按**17 个场景入口彻底隔离**打包：侧栏选「育儿与家庭」就只加载备孕/产检/新生儿/辅食/疫苗相关的知识块，选「宠物养护」就只加载养猫养狗入门。每个入口有专属系统提示词，保证回答风格和深度不跑偏。知识库没命中的问题自动调用 DuckDuckGo 上网搜索权威结果兜底。
 
 ## ✨ 功能总览
 
 | 功能 | 人话总结 | 数字例子 |
 |---|---|---|
-| **15 入口隔离** | 侧栏二选一（实际是十五选一），切换时只加载对应知识库 + 清空对话历史 | 医疗入口问"押金退还"→ 零结果；切居住常识 → 直接命中 |
-| 知识库问答 | 给一段海外生活问题，自动从所选入口的知识库里定位最相关的段落，喂给 LLM 组织成答案 | "租房签合同注意什么" → 命中 housing_seed_03.md 合同陷阱 5 连环 |
-| 上网兜底 | 如果知识库没命中或相关度低（top score < 0.15），自动调 DuckDuckGo 搜权威结果补充 | "2026 年日本入境政策" → 知识库没有 → 自动搜日本领馆官网 |
-| 来源可追溯 | 每个回答下面都列参考来源（哪个知识文件 / 哪个网页） | 回答里能看到 `📚 知识库 housing_seed_03.md (相关度 0.122)` |
-| 系统提示词隔离 | 每个入口有专属系统提示词（医疗专家 / 租房专家 / 求职专家），回答风格和深度不跑偏 | "医疗"入口的回答默认带症状描述模板；"社交"入口默认带各国小费规矩 |
+| **17 入口隔离** | 侧栏选一，切换时只加载对应知识库 + 清空对话历史 | 宠物入口问"租房押金怎么退"→ 零结果；切居住常识 → 直接命中 |
+| 知识库问答 | 给一段生活问题，自动从所选入口的知识库里定位最相关的段落，喂给 LLM 组织成答案 | "个税年度汇算怎么操作" → 命中 admin_gov 报税种子 |
+| 上网兜底 | 如果知识库没命中或相关度低（top score < 0.15），自动调 DuckDuckGo 搜权威结果补充 | "2026 年社保新政" → 知识库没有 → 自动搜人社部官网 |
+| 来源可追溯 | 每个回答下面都列参考来源（哪个知识文件 / 哪个网页） | 回答里能看到 `📚 知识库 admin_gov_seed_02.md (相关度 0.182)` |
+| 系统提示词隔离 | 每个入口有专属提示词（新手爸妈专家 / 铲屎官专家 / 报税专家），回答风格不跑偏 | "宠物"入口的回答默认带你算每月预算；"育儿"入口默认带你看产检时间线 |
 
-## 🎯 15 入口速查表
+## 🎯 17 入口速查表
 
-| 入口 | 典型问题 | 知识块数 |
-|---|---|---|
-| 语言 | "办电话卡用什么词？" "点餐几分熟怎么说？" | 10 |
-| 气候适应 | "冬天纽约穿什么？" "皮肤过敏当地买什么药膏？" | 14 |
-| 居住常识 | "租房押金怎么退？" "水电网开户哪家便宜？" | 17 |
-| 饮食与采购 | "买不到豆瓣酱用什么替？" "留学生快手菜 10 道" | 21 |
-| 交通与出行 | "驾照怎么转？" "Uber 怎么防绕路？" | 11 |
-| 医疗与健康 | "GP 和 ER 什么区别？" "救护车叫不起怎么办？" | 10 |
-| 办事与政务 | "税号怎么申请？" "护照丢了怎么补？" | 6 |
-| 社交与文化 | "小费给多少？" "哪些话题别跟外国人聊？" | 7 |
-| 应急与安全 | "杀猪盘怎么识别？" "地震来了躲哪？" | 9 |
-| 求职与生存 | "一页纸简历怎么写？" "面试 STAR 法则？" | 9 |
-| 财务管理 | "Checking 和 Savings 区别？" "学生折扣都有哪些？" | 10 |
-| 旅游 | "廉价航空行李额怎么算？" "Airbnb 假房源识别？" | 7 |
-| 留学 | "选课 GPA 怎么算？" "OPT 工签怎么申？" | 4 |
-| 兴趣 | "健身房月卡划算吗？" "哪里找语言交换？" | 8 |
-| 人际关系 | "室友边界感怎么立？" "华人互助群怎么进？" | 6 |
+| # | 入口 | 典型问题 | 知识块 |
+|---|---|---|---|
+| 1 | 语言沟通 | "打电话办业务怎么礼貌开场？" "面试自我介绍怎么说？" | 12 |
+| 2 | 气候适应 | "北方冬天穿什么？" "墙发霉怎么处理？" | 1 |
+| 3 | 居住常识 | "租房押金怎么退？" "收纳整理有什么好方法？" | 3 |
+| 4 | 饮食与采购 | "不会做饭从哪开始？" "买菜怎么省钱？" | 27 |
+| 5 | 交通与出行 | "驾照怎么迁回异地？" "网约车怎么防绕路？" | 6 |
+| 6 | 医疗与健康 | "社区医院 vs 三甲医院怎么选？" "医保异地能用吗？" | 3 |
+| 7 | 办事与政务 | "社保怎么转异地？" "个税年度汇算怎么填？" | 3 |
+| 8 | 社交与文化 | "南北方买菜差异？" "同事聚餐怎么不踩雷？" | 3 |
+| 9 | 应急与安全 | "刷单诈骗怎么识别？" "丢身份证异地怎么补？" | 6 |
+| 10 | 求职与生存 | "简历怎么写一页纸？" "试用期被辞退怎么维权？" | 11 |
+| 11 | 财务管理 | "每月房租占收入多少合适？" "信用卡最低还款的坑？" | 36 |
+| 12 | 旅游 | "廉价航空行李额怎么算？" "周边游怎么规划？" | 9 |
+| 13 | 学习提升 | "考公 vs 考研怎么选？" "怎么科学备考？" | 0 |
+| 14 | 兴趣爱好 | "健身房怎么选？" "不会社交怎么认识朋友？" | 12 |
+| 15 | 人际关系 | "室友边界感怎么立？" "借钱怎么说不？" | 4 |
+| 16 | 育儿与家庭 | "产检时间线？" "新生儿喂奶频率？" "辅食怎么加？" | 32 |
+| 17 | 宠物养护 | "第一次养猫准备什么？" "猫耳螨怎么治？" | 0 |
+
+（注：学习提升 / 宠物养护 桌面知识库暂无对口文件，完全靠 AI 知识图谱种子填充。）
 
 ## 🚀 快速开始
 
@@ -58,62 +62,64 @@ python -m streamlit run chatbot/app.py --server.headless true --server.port 8503
 
 | 文件 | 说明 |
 |---|---|
-| `chatbot/app.py` | Streamlit 前端（15 入口侧栏 + 聊天界面 + 侧边栏 API 配置） |
+| `chatbot/app.py` | Streamlit 前端（17 入口侧栏 + 聊天界面 + 侧边栏 API 配置） |
 | `chatbot/rag.py` | RAG 引擎（TF-IDF char n-gram 检索 + DuckDuckGo 上网兜底 + LLM 流式调用 + `_StreamResult` 自定义迭代器） |
 | `chatbot/requirements.txt` | 依赖清单（4 个包，`pip install` 秒装） |
-| `knowledge/<15 入口>/` | 15 个入口的知识库，每个目录若干 .md 文件，总计 151 个 |
+| `knowledge/<17 入口>/` | 17 个入口的知识库，总计 207 个 .md 文件 |
 | `run.bat` | Windows 一键启动脚本（浏览器自动弹） |
-| `.gitignore` | 忽略 `__pycache__`、`.venv`、临时脚本 |
+| `.gitignore` | 忽略 `__pycache__`、`.venv`、临时构建脚本 |
 
 ## 🛠 技术栈
 
-`Streamlit` · `scikit-learn TF-IDF (char n-gram 2~6)` · `DuckDuckGo Web Search (免费无 Key)` · `OpenAI-compatible LLM API`
+`Streamlit` · `scikit-learn TF-IDF (char n-gram 2~6, sublinear_tf)` · `DuckDuckGo Web Search (免费无 Key)` · `OpenAI-compatible LLM API`
 
 ## ⚠️ 说明
 
-- 知识库内容混合了：用户上传的海外生存 docx 文档 + AI 生成的 15 入口知识图谱种子。后者可能过时，请以实际当地规则为准。
+- 知识库内容混合了：桌面上传的生活相关 docx + AI 生成的 17 入口知识图谱种子。AI 种子可能过时，请以实际当地规则/政策为准。
 - 所有 docx 内容已脱敏：无前公司/前雇主/内部账号/具体报价/自媒体链接。
 - 平台规则、费用、时效等数字内容标注"仅供参考，以实际后台为准"。
 
 ---
 
-# Safeland Guide · Overseas Survival Assistant (English)
+# Safeland Guide · Independent Living Assistant (English)
 
 ## Why this project?
 
-People moving abroad for the first time face 101 questions — how to avoid losing a security deposit? When to go to ER vs GP? How to convert a driver's license? Will the airport taxi rip you off? Existing resources are either scattered travel blogs or single-country guides — **nothing that breaks "surviving abroad" into 15 isolated themes so you can ask precisely and find fast**.
+Young people moving to a new city after graduation face 101 untaught questions — how to avoid a rental security-deposit scam? How to transfer social insurance? How to be a new parent? What to buy before adopting a cat? How to file a tax refund? Existing resources are scattered (小红书 posts, single-city guides, 5-minute Douyin videos) — **nothing that breaks "independent living" into 17 isolated themes so you can ask precisely and find fast**.
 
-This project packages overseas survival knowledge **with strict isolation across 15 entry points**: pick "Housing" in the sidebar → loads only rental/utilities/roommate knowledge chunks; pick "Medical" → loads only doctor/insurance/emergency chunks. Zero cross-contamination. When the knowledge base comes up empty, it automatically falls back to authoritative web search via DuckDuckGo (free, no API key).
+This project packages independent-living knowledge **with strict isolation across 17 entry points**: pick "Parenting" → loads only pregnancy/prenatal/newborn/solid-food/vaccination knowledge; pick "Pets" → loads only cat+dog-care basics. Each entry has its own system prompt so responses stay in-character. When the knowledge base comes up empty, it automatically falls back to authoritative web search via DuckDuckGo (free, no API key).
 
 ## What it does
 
 | Feature | Plain English | Numbers |
 |---|---|---|
-| **15 isolated entry points** | Sidebar pick: one of 15 themes. Each loads only its own knowledge base — zero cross-contamination | Medical mode asks "security deposit refund" → zero hits; switch to Housing → instant hit |
-| Knowledge-base Q&A | Ask any question — the assistant digs through the selected theme's knowledge chunks to find the most relevant passages, then feeds them to the LLM | "Rental contract red flags" → hits housing_seed_03.md with the 5 red-flag traps |
-| Web search fallback | When nothing relevant is found (top score < 0.15), automatically queries DuckDuckGo for authoritative sources | "Japan 2026 entry policy" → not in knowledge base → auto-searches Japanese embassy |
-| Traceable sources | Every answer lists its references (which knowledge file / which webpage) | Answers show `📚 housing_seed_03.md (relevance 0.122)` |
-| Per-mode system prompts | Each entry has its own system prompt — Medical prompts the LLM to use symptom-description templates; Social prompts it to cover tipping norms | Different entry → different expert persona |
+| **17 isolated entry points** | Sidebar radio pick: one of 17 themes. Each loads only its own knowledge base — zero cross-contamination | Pets mode asks "how to get a rental deposit back" → zero hits; switch to Housing → instant hit |
+| Knowledge-base Q&A | Ask any question — the assistant digs through the selected theme's knowledge chunks to find the most relevant passages, then feeds them to the LLM | "How to do my annual tax filing?" → hits admin_gov tax seeds |
+| Web search fallback | When nothing relevant is found (top score < 0.15), automatically queries DuckDuckGo for authoritative sources | "2026 social insurance policy" → not in KB → auto-searches government site |
+| Traceable sources | Every answer lists its references (which knowledge file / which webpage) | Shows `📚 admin_gov_seed_02.md (relevance 0.182)` |
+| Per-mode system prompts | Each entry has its own persona (new-parent expert / cat-dog expert / tax expert) so answers don't drift | Pets mode defaults to calculating monthly pet budget; Parenting mode defaults to prenatal timeline |
 
-## 15 Entry Points Quick Reference
+## 17 Entry Points Quick Reference
 
-| Entry | Typical question | Chunks |
-|---|---|---|
-| Language | "What word for a phone card?" "How do I order medium-rare?" | 10 |
-| Climate | "What to wear in NYC winter?" "What cream for allergic skin?" | 14 |
-| Housing | "How to get security deposit back?" "Which broadband is cheapest?" | 17 |
-| Food & Shopping | "Substitute for doubanjiang?" "10 lazy student meals" | 21 |
-| Transportation | "How to convert driver's license?" "Uber route-fraud tips" | 11 |
-| Medical & Health | "ER vs GP — when to go where?" "Ambulance too expensive?" | 10 |
-| Admin & Government | "How to apply for a tax number?" "Lost passport — what now?" | 6 |
-| Social & Culture | "How much to tip?" "What topics are off-limits with foreigners?" | 7 |
-| Emergency & Safety | "How to spot a pig-butchering scam?" "Where to hide during an earthquake?" | 9 |
-| Job & Survival | "One-page resume template?" "STAR interview method?" | 9 |
-| Finance | "Checking vs Savings account?" "All student discounts available" | 10 |
-| Travel | "Budget airline baggage allowance?" "Airbnb fake-listing detection" | 7 |
-| Study Abroad | "How is GPA calculated?" "OPT work permit application" | 4 |
-| Hobbies | "Gym monthly pass worth it?" "Where to find language exchange" | 8 |
-| Relationships | "How to set boundaries with roommates?" "How to join Chinese expat groups" | 6 |
+| # | Entry | Typical question | Chunks |
+|---|---|---|---|
+| 1 | Language | "How to politely start a phone call for business?" "Tell me a self-intro template" | 12 |
+| 2 | Climate | "What to wear in northern winter?" "How to treat mold on walls?" | 1 |
+| 3 | Housing | "How to get security deposit back?" "Any good decluttering tips?" | 3 |
+| 4 | Food & Shopping | "I can't cook — where to start?" "How to save money at the market?" | 27 |
+| 5 | Transportation | "How to convert driver's license?" "How to avoid rideshare detours?" | 6 |
+| 6 | Medical | "Community clinic vs 3A hospital — which to choose?" "Can medical insurance be used cross-city?" | 3 |
+| 7 | Admin & Government | "How to transfer social insurance?" "How to do annual tax filing?" | 3 |
+| 8 | Social & Culture | "North vs south buying habits — any difference?" "How not to step on toes at office dinners?" | 3 |
+| 9 | Emergency & Safety | "How to spot a job-scam?" "How to replace lost ID in another city?" | 6 |
+| 10 | Job & Survival | "How to write a one-page resume?" "How to fight unfair dismissal during probation?" | 11 |
+| 11 | Finance | "How much rent should be ≤ of my income?" "What's the trap with credit-card minimum payments?" | 36 |
+| 12 | Travel | "How to calculate budget-airline baggage allowance?" "How to plan a weekend trip?" | 9 |
+| 13 | Study Up | "Civil service exam vs grad school — how to choose?" "How to study effectively?" | 0 |
+| 14 | Hobbies | "How to pick a gym?" "How to make friends when you don't drink?" | 12 |
+| 15 | Relationships | "How to set roommate boundaries?" "How to say no when someone asks to borrow money?" | 4 |
+| 16 | Parenting | "Prenatal exam timeline?" "How often to feed a newborn?" "How to introduce solid food?" | 32 |
+| 17 | Pets | "What to buy before adopting a cat?" "How to treat ear mites in cats?" | 0 |
 
 ## Quick start
 
@@ -139,19 +145,19 @@ Change the API base URL, key, model, and top-K retrieval from the sidebar at any
 
 | File | What it does |
 |---|---|
-| `chatbot/app.py` | Streamlit front-end (15-entry sidebar + chat UI + sidebar API config) |
-| `chatbot/rag.py` | RAG engine (TF-IDF char n-gram retrieval + DuckDuckGo web fallback + LLM streaming + custom `_StreamResult` iterable class) |
+| `chatbot/app.py` | Streamlit front-end (17-entry sidebar + chat UI + sidebar API config) |
+| `chatbot/rag.py` | RAG engine (TF-IDF char n-gram retrieval + DuckDuckGo web fallback + LLM streaming + `_StreamResult` custom iterable class) |
 | `chatbot/requirements.txt` | Dependencies (4 packages, `pip install` in seconds) |
-| `knowledge/<15 modes>/` | Knowledge bases for each entry, 151 .md files total |
+| `knowledge/<17 modes>/` | Knowledge bases for each entry, 207 .md files total |
 | `run.bat` | Windows one-click launch script |
-| `.gitignore` | Ignores `__pycache__`, `.venv`, temp scripts |
+| `.gitignore` | Ignores `__pycache__`, `.venv`, temp build scripts |
 
 ## Tech stack
 
-`Streamlit` · `scikit-learn TF-IDF (char n-gram 2~6)` · `DuckDuckGo Web Search (free, no API key)` · `OpenAI-compatible LLM API`
+`Streamlit` · `scikit-learn TF-IDF (char n-gram 2~6, sublinear_tf)` · `DuckDuckGo Web Search (free, no API key)` · `OpenAI-compatible LLM API`
 
 ## Notes
 
-- Knowledge base is a mix of: user-uploaded overseas survival docx files + AI-generated 15-entry knowledge graph seeds. The latter may be outdated — verify with actual local rules.
+- Knowledge base is a mix of: user-uploaded lifestyle docx files + AI-generated 17-entry knowledge graph seeds. AI seeds may be outdated — verify with actual local rules/policies.
 - All docx content desensitized: no prior company / employer / internal accounts / specific pricing / social media links.
 - Platform rules, fees, timelines marked "for reference only — verify in your actual dashboard".

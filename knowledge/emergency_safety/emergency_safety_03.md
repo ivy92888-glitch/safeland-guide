@@ -1,5 +1,31 @@
-# 应急与安全 知识库 · 第8册_逻辑统计数学工具箱技术编程实战
+# 应急与安全 · 第8册_逻辑统计数学工具箱技术编程实战
 
+        self._prev = set(_prev)
+        self._op = _op
+    def __add__(self, other):
+        other = other if isinstance(other, Value) else Value(other)
+        out = Value(self.data + other.data, (self, other), '+')
+        def _backward():
+            self.grad += out.grad
+            other.grad += out.grad
+        out._backward = _backward
+        return out
+    def __mul__(self, other):
+        other = other if isinstance(other, Value) else Value(other)
+        out = Value(self.data * other.data, (self, other), '*')
+        def _backward():
+            self.grad += other.data * out.grad
+            other.grad += self.data * out.grad
+        out._backward = _backward
+        return out
+    def __pow__(self, other):
+        assert isinstance(other, (int, float))
+        out = Value(self.data ** other, (self,), f'**{other}')
+        def _backward():
+            self.grad += other * (self.data ** (other - 1)) * out.grad
+        out._backward = _backward
+        return out
+    def relu(self):
         out = Value(0 if self.data < 0 else self.data, (self,), 'ReLU')
         def _backward():
             self.grad += (out.data > 0) * out.grad
@@ -68,43 +94,3 @@ class GPT:
             next_idx = max(range(len(last)), key=lambda i: last[i].data)
             idx[0].append(next_idx)
         return idx
-# ========== 5. Adam Optimizer ==========
-class Adam:
-    def __init__(self, params, lr=0.01, beta1=0.9, beta2=0.999, eps=1e-8):
-        self.params = params
-        self.lr = lr
-        self.beta1, self.beta2, self.eps = beta1, beta2, eps
-        self.m = [0.0] * len(params)
-        self.v = [0.0] * len(params)
-        self.t = 0
-    def step(self):
-        self.t += 1
-        for i, p in enumerate(self.params):
-            self.m[i] = self.beta1 * self.m[i] + (1 - self.beta1) * p.grad
-            self.v[i] = self.beta2 * self.v[i] + (1 - self.beta2) * p.grad ** 2
-            mhat = self.m[i] / (1 - self.beta1 ** self.t)
-            vhat = self.v[i] / (1 - self.beta2 ** self.t)
-            p.data -= self.lr * mhat / (vhat ** 0.5 + self.eps)
-# ========== 6. Training Loop ==========
-def train_gpt(text, max_steps=100):
-    tokenizer = Tokenizer(text)
-    data = tokenizer.encode(text)
-    block_size = 8
-    model = GPT(tokenizer.vocab_size, block_size)
-    params = []
-    for row in model.token_emb:
-        for v in row:
-            params.append(v)
-    for row in model.pos_emb:
-        for v in row:
-            params.append(v)
-    # collect Layer params too (weights of head neurons)
-    for neuron in model.head.neurons:
-        for w in neuron.w:
-            params.append(w)
-        params.append(neuron.b)
-    opt = Adam(params, lr=0.001)
-    for step in range(max_steps):
-        # sample a chunk
-        i = random.randint(0, len(data) - block_size - 1)
-        x = [data[i:i+block_size]]
